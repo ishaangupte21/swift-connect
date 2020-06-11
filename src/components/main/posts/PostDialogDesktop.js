@@ -17,7 +17,7 @@ export const PostDialogDesktop = ({open, handleClose}) => {
         auth.onAuthStateChanged(user => {
             if(user) {
                setUsername(user.displayName)
-               setUid(user.uid),
+               setUid(user.uid)
                setPhotoURL(user.photoURL)
             }
         })

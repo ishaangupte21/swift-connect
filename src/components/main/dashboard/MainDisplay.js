@@ -1,9 +1,10 @@
 import React from 'react'
 import {Card, CardActions, CardContent, CardHeader, Avatar, Typography, CardMedia, List, ListItem, IconButton, Dialog,
 DialogActions, DialogContent, TextField, DialogTitle, Button } from '@material-ui/core'
-import {Share as ShareIcon, Favorite as FavoriteIcon} from '@material-ui/icons'
+import {Share as ShareIcon, Favorite as FavoriteIcon, FileCopy as FileCopyIcon} from '@material-ui/icons'
 import Carousel from 'react-material-ui-carousel'
 import { auth, functions } from '../../../config/firebase'
+import { Link } from 'react-router-dom'
 
 export const MainDisplayCarousel = ({data}) => {
 
@@ -55,7 +56,7 @@ export const Item = ({post}) => {
         <ListItem>
         <Card style={{width: '100%'}}>
          
-        <CardHeader avatar={<Avatar src={post.data().photoURL}/>} title={post.data().username}
+        <CardHeader avatar={<Avatar src={post.data().photoURL}/>} title={(<Link style={{textDecoration: 'none', color: 'black'}} to={`/profile/${post.data().uid}`}>{post.data().username}</Link>)}
          subheader={new Date(post.data().systemTime).toDateString()}/>
         
          
@@ -95,7 +96,7 @@ export const Item = ({post}) => {
           <ListItem>
           <Card style={{width: '100%'}}>
            
-          <CardHeader avatar={<Avatar src={post.data().photoURL}/>} title={post.data().username}
+          <CardHeader avatar={<Avatar src={post.data().photoURL}/>} title={(<Link style={{textDecoration: 'none', color: 'black'}} to={`/profile/${post.data().uid}`}>{post.data().username}</Link>)}
            subheader={new Date(post.data().systemTime).toDateString()}/>
           
           
@@ -131,6 +132,15 @@ export const Item = ({post}) => {
 }
 
    export const ShareModal = ({id, open, onClose}) => {
+    const inputRef = React.useRef()
+
+    const copy = () => {
+        const copyTest = inputRef.current.childNodes[1].childNodes[0]
+        copyTest.select()
+        copyTest.setSelectionRange(0, 99999)
+        document.execCommand('copy')
+    }
+
     return (
         <div>
             <Dialog open={open} onClose={onClose}>
@@ -138,7 +148,8 @@ export const Item = ({post}) => {
                 <DialogTitle>Share</DialogTitle>
             <DialogContent>
             
-            <TextField readOnly label='Share' defaultValue={`https:/rinosocial.com/posts/${id}`} color="primary"/>
+            <TextField InputProps={{readOnly: true}} label='Share' defaultValue={`https:/rinosocial.com/posts/${id}`} color="primary" ref={inputRef}/>
+            <IconButton style={{marginLeft: 15}} onClick={copy}><FileCopyIcon /></IconButton>
             
             </DialogContent>
 
