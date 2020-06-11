@@ -139,6 +139,29 @@ exports.editAccount = functions.https.onCall(async (data, context) => {
     }
 })
 
+exports.follow = functions.https.onCall(async (data, context) => {
+    try {
+        if(!context.auth) {
+            throw new functions.https.HttpsError('unauthenticated', 'You must be authenticated to follow a user')
+       }
+       const {id} = data
+       const followerData = (await admin.firestore().collection('users').doc(id).get()).data().followers
+
+       if(followerData.includes(context.auth.uid)) {
+           await admin.firestore().collection('users').doc(id).update({followers: admin.firestore.FieldValue.arrayRemove(context.auth.uid)})
+           return admin.firestore().collection('users').doc(context.auth.uid).update({following: admin.firestore.FieldValue.arrayRemove(context.auth.id)})
+
+       } else {
+        await admin.firestore().collection('users').doc(id).update({followers: admin.firestore.FieldValue.arrayRemove(context.auth.uid)})
+        return admin.firestore().collection('users').doc(context.auth.uid).update({following: admin.firestore.FieldValue.arrayRemove(context.auth.id)})
+       }
+
+    } catch (err) {
+        console.error(err.message)
+        throw new functions.https.HttpsError('internal', err.message)
+    }
+})
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

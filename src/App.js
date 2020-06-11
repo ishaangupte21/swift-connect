@@ -14,7 +14,7 @@ import Messages from './components/main/messages/Messages';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="App" style={{overflow: 'hidden'}}>
         <ThemeProvider theme={theme} >
           <BrowserRouter>
           

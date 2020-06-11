@@ -27,7 +27,7 @@ export default class Dashboard extends React.Component {
     }
     render() {
         return (
-           <section style={{overflowX: 'hidden'}}>
+           <section style={{overflow: 'hidden'}}>
            
            <div id="dashboard-pc"> 
            <Navbar history={this.props.history} />

@@ -12,6 +12,8 @@ export const UserView = ({data}) => {
         
         <Typography variant='h6'>{data.username}</Typography> 
         <Avatar src={data.photoURL} variant='rounded' />
+        <br/>
+            
  
         </section>
     )

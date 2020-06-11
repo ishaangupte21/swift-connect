@@ -38,7 +38,8 @@ export const PostDialogDesktop = ({open, handleClose}) => {
                     description: post,
                     systemTime: Date.now(),
                     imageURL: downloadURL,
-                    uid
+                    uid,
+                    likes: []
                 })
                 handleClose()
             } else {
