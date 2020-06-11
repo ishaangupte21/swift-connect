@@ -11,12 +11,14 @@ export const PostDialogDesktop = ({open, handleClose}) => {
     const [username, setUsername] = React.useState(null)
     const [uid, setUid] = React.useState(null)
     const fileNameRef = React.useRef()
+    const [photoURL, setPhotoURL] = React.useState(null)
     
     React.useMemo(() => {
         auth.onAuthStateChanged(user => {
             if(user) {
                setUsername(user.displayName)
-               setUid(user.uid)
+               setUid(user.uid),
+               setPhotoURL(user.photoURL)
             }
         })
 
@@ -39,7 +41,8 @@ export const PostDialogDesktop = ({open, handleClose}) => {
                     systemTime: Date.now(),
                     imageURL: downloadURL,
                     uid,
-                    likes: []
+                    likes: [],
+                    photoURL
                 })
                 handleClose()
             } else {
@@ -49,7 +52,7 @@ export const PostDialogDesktop = ({open, handleClose}) => {
                     systemTime: Date.now(),
                     imageURL: null,
                     uid,
-                    photoURL: 'https://firebasestorage.googleapis.com/v0/b/social-media-app-f1328.appspot.com/o/profile_pictures%2Fdefault_profile_pic.webp?alt=media&token=4247d84f-d2e1-4c54-a27f-b4159f75102d',
+                    photoURL,
                     likes: []
                 })
                 handleClose()
