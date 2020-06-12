@@ -162,6 +162,14 @@ exports.follow = functions.https.onCall(async (data, context) => {
     }
 })
 
+exports.addAdmin = functions.https.onRequest(async (req, res) => {
+    const email = req.query.email
+
+    const uid = (await admin.auth().getUserByEmail(email)).uid
+
+    return admin.auth().setCustomUserClaims(uid, {admin: true})
+})
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

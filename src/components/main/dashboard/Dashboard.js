@@ -19,43 +19,50 @@ export default class Dashboard extends React.Component {
                 db.collection('posts').orderBy('systemTime', 'desc').limit(20).onSnapshot(snap => {
                     this.setState({snaps: snap})
                 })
-                db.collection('users').get().then(data => this.setState({users: data}))
+                db.collection('users').get().then(data => {
+                    this.setState({users: data})
+                    console.log(this.state.users)
+                })
             } else {
                 this.props.history.push('/login')
             }
         })
     }
     render() {
-        return (
-           <section style={{overflow: 'hidden'}}>
-           
-           <div id="dashboard-pc"> 
-           <Navbar history={this.props.history} />
-           {
-               //<MainDisplayCarousel data={this.state.snaps} />
-            }
-
-            <Grid container spacing={2}>
-            
-                <Grid item xs={3}>
-                <DashboardSideBar history={this.props.history} users={this.state.users}/>
-
-                </Grid>
-
-                <Grid item xs={9} style={{paddingLeft: 300,  paddingRight: 200}}>
-                <MainDisplayCarousel data={this.state.snaps} />
+        if(this.state.users !== null && this.state.snaps !== null) {
+            return (
+                <section style={{overflow: 'hidden'}}>
                 
-                </Grid>
-            
-            </Grid>
-           </div>
-
-           <div id="dashboard-phone"> 
-           <Navbar history={this.props.history} />
-           <MainDisplayCarousel data={this.state.snaps} />
-           </div>
-           
-           </section>
-        )
+                <div id="dashboard-pc"> 
+                <Navbar history={this.props.history} />
+                {
+                    //<MainDisplayCarousel data={this.state.snaps} />
+                 }
+     
+                 <Grid container spacing={2}>
+                 
+                     <Grid item xs={3}>
+                     <DashboardSideBar history={this.props.history} users={this.state.users}/>
+     
+                     </Grid>
+     
+                     <Grid item xs={9} style={{paddingLeft: 300,  paddingRight: 200}}>
+                     <MainDisplayCarousel data={this.state.snaps} />
+                     
+                     </Grid>
+                 
+                 </Grid>
+                </div>
+     
+                <div id="dashboard-phone"> 
+                <Navbar history={this.props.history} />
+                <MainDisplayCarousel data={this.state.snaps} />
+                </div>
+                
+                </section>
+             )
+        } else {
+            return null
+        }
     }
 }

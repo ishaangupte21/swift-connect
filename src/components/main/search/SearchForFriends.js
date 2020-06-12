@@ -29,17 +29,24 @@ export class SearchForFriends extends React.Component {
 
     componentDidMount() {
         if(this.props.data !== null) {
+            // let array = []
+            let array = []
             this.props.data.docs.forEach(doc => {
-                let array = [...this.state.json, doc]
-                this.setState({json: array})
+                array.push(doc.data());
+                // console.log(doc.data())
             })
+
+            this.setState({json: array})
+            
+        } else {
+            // console.log('data is null')
         }
     }
 
     render() {
         if(this.props.data !== null) {
             return (
-                <Dialog open={this.props.open} onClose={this.props.handleClose}  >
+                <Dialog open={this.props.open} onClose={this.props.handleClose}  style={{padding: '2rem'}} >
         
             <DialogTitle>Search for Friends</DialogTitle>
     
@@ -49,7 +56,8 @@ export class SearchForFriends extends React.Component {
                 getOptionLabel={option => option.username}
                 renderOption = {option => (
                     <React.Fragment>
-                    <Link to={`/profile/${option.uid}`}> <span>{option.username}</span></Link>
+                    <Link to={`/profile/${option.uid}`} style={{textDecoration: 'none'}}
+                    > <span style={{color: 'black', textDecoration: 'none'}}>{option.username}</span></Link>
     
                     </React.Fragment>
                 )}

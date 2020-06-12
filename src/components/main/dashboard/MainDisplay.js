@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, CardActions, CardContent, CardHeader, Avatar, Typography, CardMedia, List, ListItem, IconButton, Dialog,
-DialogActions, DialogContent, TextField, DialogTitle, Button } from '@material-ui/core'
+DialogActions, DialogContent, TextField, DialogTitle, Button, Tooltip } from '@material-ui/core'
 import {Share as ShareIcon, Favorite as FavoriteIcon, FileCopy as FileCopyIcon} from '@material-ui/icons'
 import Carousel from 'react-material-ui-carousel'
 import { auth, functions } from '../../../config/firebase'
@@ -149,8 +149,10 @@ export const Item = ({post}) => {
             <DialogContent>
             
             <TextField InputProps={{readOnly: true}} label='Share' defaultValue={`https:/rinosocial.com/posts/${id}`} color="primary" ref={inputRef}/>
+           
+            <Tooltip title="Copy">
             <IconButton style={{marginLeft: 15}} onClick={copy}><FileCopyIcon /></IconButton>
-            
+            </Tooltip>
             </DialogContent>
 
             <DialogActions>
